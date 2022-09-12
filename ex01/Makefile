@@ -6,7 +6,7 @@
 #    By: ccottin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/03 12:16:24 by ccottin           #+#    #+#              #
-#    Updated: 2022/08/15 12:09:42 by ccottin          ###   ########.fr        #
+#    Updated: 2022/09/12 20:13:19 by ccottin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC	= c++
 
 OBJS	= $(SRCS:.cpp=.o)
 
-INCLUDE	= -I./PhoneBook.hpp -I./Contact.hpp
+INCLUDE	= -I./PhoneBook.hpp
 
 CFLAGS	= -Wall -Wextra -Werror -std=c++98 -g3
 

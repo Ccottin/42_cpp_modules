@@ -6,18 +6,19 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 13:59:13 by ccottin           #+#    #+#             */
-/*   Updated: 2022/08/15 15:11:47 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/09/12 19:39:46 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef "CONTACT_HPP"
-# define "CONTACT_HPP"
+#ifndef CONTACT_HPP
+# define CONTACT_HPP
+# include <iostream>
 
 class	Contact {
 
 public :
 
-	Contact(void);
+	Contact(PhoneBook Book);
 	~Contact(void);
 
 	std::string	getstring(void) const;
