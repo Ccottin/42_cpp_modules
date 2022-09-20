@@ -18,13 +18,8 @@ class	Contact {
 
 public :
 
-	Contact(PhoneBook Book);
+	Contact(void);
 	~Contact(void);
-
-	std::string	getstring(void) const;
-	void		setstring(std::string);
-
-private :
 
 	int		_number;
 	std::string	_first_name;

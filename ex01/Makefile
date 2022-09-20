@@ -12,13 +12,11 @@
 
 NAME	= PhoneBook
 
-SRCS	= PhoneBook.cpp
+SRCS	= PhoneBook.cpp Contact.cpp
 
 CC	= c++
 
 OBJS	= $(SRCS:.cpp=.o)
-
-INCLUDE	= -I./PhoneBook.hpp
 
 CFLAGS	= -Wall -Wextra -Werror -std=c++98 -g3
 

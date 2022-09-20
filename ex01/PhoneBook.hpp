@@ -21,15 +21,14 @@ public :
 
 	PhoneBook(void);
 	~PhoneBook(void);
-	Contact		setcontact(void);
-	static int	getnbcontact(void);
-	int		add_fonction(void);
-	int		search_fonction(void);
-	void		destroy_fonction(int nb, Contact contact);
+	void		search_fonction(void);
+	void		add_fonction(void);
+	void		print_fonction(int nb);
 
 private :
+
 	static int	_nbcontact;
-	Contact		*contacts;
+	Contact		contacts[8];
 };
 
 #endif

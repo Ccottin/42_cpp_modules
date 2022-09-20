@@ -11,31 +11,12 @@
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
-# include <iostream>
+#include <iostream>
+#include <string.h>
+#include <iomanip>
+#include <string>
 
 int	PhoneBook::_nbcontact = 1;
-
-Contact::Contact(int number) :  _number(number)
-{
-	std::cout << "Create contact" << this->_number << "\n";
-	std::cout << "Enter a firstname :\n";
-	std::cin >> this->_first_name;
-	std::cout << "Enter a lastname :\n";
-	std::cin >> this->_last_name;
-	std::cout << "Enter a nickname :\n";
-	std::cin >> this->_nickname;
-	std::cout << "Enter a phone number:\n";
-	std::cin >> this->_phone_number;
-	std::cout << "Enter contact darkest secret :\n";
-	std::cin >> this->_darkest_secret;
-//les constructeurs servent a remplir les infos et pas juste afaire joli spece de tanche, avoir si lecpp te permet de tout deplacer dan
-// un tableau quand tu supprimes le premier element + les leaks 
-}
-
-Contact::~Contact(void)
-{
-	std::cout << "Destroy contact " << this->_number << "\n";
-}
 
 PhoneBook::PhoneBook(void)
 {
@@ -47,54 +28,109 @@ PhoneBook::~PhoneBook(void)
 	std::cout << "Phonebook closed and destroyed" << std::endl;
 }
 
-int		PhoneBook::getnbcontact(void)
+std::string	set_str(std::string str)
 {
-	return (_nbcontact);
-}
-
-void		PhoneBook::destroy_fonction(int	nb, Contact contact)
-{
-	Contact::~Contact;
-	this->_nbcontact--;
-}
-
-int		PhoneBook::add_fonction(PhoneBook Book)
-{
-	if (PhoneBook::getnbcontact() < 9)
+	if (str.size() > 9)
 	{
-		Contact(this->_nbcontact);
-		this->_nbcontact++;
+		str[9] = '.';
+		str.resize(10);
 	}
+	return (str);
 }
-/*
-int		PhoneBook::search_fonction(void)
-{
-//pour le search il yasurement a creuser du cote de iomanip avec les set widht
-}*/
 
-int		ft_phonebook(PhoneBook Book)
+void	PhoneBook::print_fonction(int nb)
 {
+	std::cout << "Contact " << nb + 1 << std::endl;
+	std::cout << "First name : "<< this->contacts[nb]._first_name << std::endl;
+	std::cout << "Last name : "<< this->contacts[nb]._last_name << std::endl;
+	std::cout << "Nick name : "<< this->contacts[nb]._nickname << std::endl;
+	std::cout << "Phone number : "<< this->contacts[nb]._phone_number << std::endl;
+	std::cout << "Darkest secret : "<< this->contacts[nb]._darkest_secret << std::endl;
+}
+
+int	get_int(std::string str, int lim)
+{
+	if (str.size() == 1 && str[0] - 48 < lim && str[0] - 48 > 0)
+		return (str[0] - 48);
+	return (10);
+}	
+
+void	PhoneBook::search_fonction(void)
+{
+	int	contact;
 	std::string	str;
-	
-	getline(std::cin, str);
-	if (!str.compare("ADD"))
-		return (add_fonction(Book));
-//	else if (!str.compare("SEARCH"))
-//		return (search_fonction());
-	else if (!str.compare("EXIT"))
-		return (0);
+
+	if (this->_nbcontact == 1)
+	{
+		(std::cout << "Phonebook is empty!\n");
+		return ;
+	}
+	contact = 0;
+	while (this->_nbcontact > contact + 1)
+	{
+		std::cout << std::setw(10);
+		std::cout << contact + 1 << "|";
+		std::cout << std::setw(10);
+		std::cout << set_str(this->contacts[contact]._first_name) << "|";
+		std::cout << std::setw(10);
+		std::cout << set_str(this->contacts[contact]._last_name) << "|";
+		std::cout << std::setw(10);
+		std::cout << set_str(this->contacts[contact]._phone_number) << std::endl;
+		contact++;
+	}
+	contact++;
+	while (contact >= this->_nbcontact)
+	{
+		std::cout << "Please make a selection" << std::endl;
+		getline(std::cin, str);
+		contact = get_int(str, this->_nbcontact);
+	}
+	this->print_fonction(contact - 1);
+}
+
+void	PhoneBook::add_fonction(void)
+{
+	static int	add = 0;
+
+	if (add == 8)
+		add = 0;
+	std::cout << "Create contact " << add + 1 << "\n";
+	this->contacts[_nbcontact]._number = add + 1;
+	std::cout << "Enter a firstname :\n";
+	std::cin >> this->contacts[add]._first_name;
+	std::cout << "Enter a lastname :\n";
+	std::cin >> this->contacts[add]._last_name;
+	std::cout << "Enter a nickname :\n";
+	std::cin >> this->contacts[add]._nickname;
+	std::cout << "Enter a phone number:\n";
+	std::cin >> this->contacts[add]._phone_number;
+	std::cout << "Enter contact darkest secret :\n";
+	getline(std::cin, this->contacts[add]._darkest_secret);
+	while (this->contacts[add]._darkest_secret.compare("") == 0)
+		getline(std::cin, this->contacts[add]._darkest_secret);
+	std::cout << "Contact " << add + 1 << " successfully created" << std::endl;
+	if (this->_nbcontact != 9)
+		this->_nbcontact++;
+	add++;
 }
 
 int	main(int ac, char **av)
 {
 	PhoneBook	Book;
+	std::string	str;
 
 	(void)av;
 	if (ac != 1)
 		return (0);
-	while (ft_phonebook(Book))
+	while (7)
 	{
-		
+		getline(std::cin, str);
+		if (!str.compare("ADD"))
+			Book.add_fonction();
+		else if (!str.compare("SEARCH"))
+			Book.search_fonction();
+		else if (!str.compare("EXIT"))
+			return (0);
 	}
 	return (0);	
 }
