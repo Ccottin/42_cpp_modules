@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:22:31 by ccottin           #+#    #+#             */
-/*   Updated: 2022/09/12 20:51:20 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/07 13:25:07 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ std::string	set_str(std::string str)
 void	PhoneBook::print_fonction(int nb)
 {
 	std::cout << "Contact " << nb + 1 << std::endl;
-	std::cout << "First name : "<< this->contacts[nb]._first_name << std::endl;
-	std::cout << "Last name : "<< this->contacts[nb]._last_name << std::endl;
-	std::cout << "Nick name : "<< this->contacts[nb]._nickname << std::endl;
-	std::cout << "Phone number : "<< this->contacts[nb]._phone_number << std::endl;
-	std::cout << "Darkest secret : "<< this->contacts[nb]._darkest_secret << std::endl;
+	std::cout << "First name : "<< this->contacts[nb].getFn() << std::endl;
+	std::cout << "Last name : "<< this->contacts[nb].getLn() << std::endl;
+	std::cout << "Nick name : "<< this->contacts[nb].getNn() << std::endl;
+	std::cout << "Phone number : "<< this->contacts[nb].getPn() << std::endl;
+	std::cout << "Darkest secret : "<< this->contacts[nb].getDs() << std::endl;
 }
 
 int	get_int(std::string str, int lim)
@@ -71,11 +71,11 @@ void	PhoneBook::search_fonction(void)
 		std::cout << std::setw(10);
 		std::cout << contact + 1 << "|";
 		std::cout << std::setw(10);
-		std::cout << set_str(this->contacts[contact]._first_name) << "|";
+		std::cout << set_str(this->contacts[contact].getFn()) << "|";
 		std::cout << std::setw(10);
-		std::cout << set_str(this->contacts[contact]._last_name) << "|";
+		std::cout << set_str(this->contacts[contact].getLn()) << "|";
 		std::cout << std::setw(10);
-		std::cout << set_str(this->contacts[contact]._phone_number) << std::endl;
+		std::cout << set_str(this->contacts[contact].getPn()) << std::endl;
 		contact++;
 	}
 	contact++;
@@ -87,27 +87,57 @@ void	PhoneBook::search_fonction(void)
 	}
 	this->print_fonction(contact - 1);
 }
+	void	setNumber(int);
+	void	setFn(std::string);
+	void	setLn(std::string);
+	void	setNn(std::string);
+	void	setPn(std::string);
+	void	setDs(std::string);
 
 void	PhoneBook::add_fonction(void)
 {
 	static int	add = 0;
+	std::string	str;
 
 	if (add == 8)
 		add = 0;
 	std::cout << "Create contact " << add + 1 << "\n";
-	this->contacts[_nbcontact]._number = add + 1;
+	this->contacts[_nbcontact].setNumber(add + 1);
+
 	std::cout << "Enter a firstname :\n";
-	std::cin >> this->contacts[add]._first_name;
+	getline(std::cin, str);
+	while (str.compare("") == 0)
+		getline(std::cin, str);
+	this->contacts[add].setFn(str);
+	str.clear();
+
 	std::cout << "Enter a lastname :\n";
-	std::cin >> this->contacts[add]._last_name;
+	getline(std::cin, str);
+	while (str.compare("") == 0)
+		getline(std::cin, str);
+	this->contacts[add].setLn(str);
+	str.clear();
+
 	std::cout << "Enter a nickname :\n";
-	std::cin >> this->contacts[add]._nickname;
+	getline(std::cin, str);
+	while (str.compare("") == 0)
+		getline(std::cin, str);
+	this->contacts[add].setNn(str);
+	str.clear();
+
 	std::cout << "Enter a phone number:\n";
-	std::cin >> this->contacts[add]._phone_number;
+	getline(std::cin, str);
+	while (str.find_first_not_of("0123456789") != std::string::npos || str.compare("") == 0)
+		getline(std::cin, str);
+	this->contacts[add].setPn(str);
+	str.clear();
+	
 	std::cout << "Enter contact darkest secret :\n";
-	getline(std::cin, this->contacts[add]._darkest_secret);
-	while (this->contacts[add]._darkest_secret.compare("") == 0)
-		getline(std::cin, this->contacts[add]._darkest_secret);
+	getline(std::cin, str);
+	while (str.compare("") == 0)
+		getline(std::cin, str);
+	this->contacts[add].setDs(str);
+
 	std::cout << "Contact " << add + 1 << " successfully created" << std::endl;
 	if (this->_nbcontact != 9)
 		this->_nbcontact++;
@@ -116,12 +146,13 @@ void	PhoneBook::add_fonction(void)
 
 int	main(int ac, char **av)
 {
-	PhoneBook	Book;
-	std::string	str;
-
 	(void)av;
 	if (ac != 1)
 		return (0);
+
+	PhoneBook	Book;
+	std::string	str;
+	
 	while (7)
 	{
 		getline(std::cin, str);

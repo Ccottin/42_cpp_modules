@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 13:59:13 by ccottin           #+#    #+#             */
-/*   Updated: 2022/09/12 19:39:46 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/07 12:49:14 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,24 @@ public :
 
 	Contact(void);
 	~Contact(void);
+
+	int		getNumber(void);
+	std::string	getFn(void);
+	std::string	getLn(void);
+	std::string	getNn(void);
+	std::string	getPn(void);
+	std::string	getDs(void);
+
+	void	setNumber(int);
+	void	setFn(std::string);
+	void	setLn(std::string);
+	void	setNn(std::string);
+	void	setPn(std::string);
+	void	setDs(std::string);
+
+
+
+private :
 
 	int		_number;
 	std::string	_first_name;
